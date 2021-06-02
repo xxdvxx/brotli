@@ -1,5 +1,4 @@
 %define _prefix      /usr/local
-%define _conf_dir    %{_sysconfdir}/brotli
 %define _share_dir   %{_prefix}/share/
 
 Summary: Lossless compression algorithm
@@ -27,10 +26,17 @@ It is similar in speed with deflate but offers more dense compression.
 
 %install
 mkdir -p $RPM_BUILD_ROOT%{_prefix}/bin
-mkdir -p $RPM_BUILD_ROOT%{_env_dir}
-mkdir -p $RPM_BUILD_ROOT%{_share_dir}/brotli
+mkdir -p $RPM_BUILD_ROOT%{_share_dir}/licenses/brotli-%{version}/
+mkdir -p $RPM_BUILD_ROOT%{_libdir}
 install -p -D -m 755 brotli $RPM_BUILD_ROOT%{_prefix}/bin/brotli
-install -p -D -m 755 db/migrations/* $RPM_BUILD_ROOT%{_share_dir}/brotli
+install -p -D -m 755 LICENSE $RPM_BUILD_ROOT%{_share_dir}/licenses/brotli-%{version}/
+install -p -D -m 755 libbrotlicommon.so.%{version} $RPM_BUILD_ROOT%{_libdir}
+install -p -D -m 755 libbrotlidec.so.%{version} $RPM_BUILD_ROOT%{_libdir}
+install -p -D -m 755 libbrotlienc.so.%{version} $RPM_BUILD_ROOT%{_libdir}
+ln -s $RPM_BUILD_ROOT%{_libdir}/libbrotlicommon.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libbrotlicommon.so.1
+ln -s $RPM_BUILD_ROOT%{_libdir}/libbrotlidec.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libbrotlidec.so.1
+ln -s $RPM_BUILD_ROOT%{_libdir}/libbrotlienc.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libbrotlienc.so.1
+
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -38,4 +44,5 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root)
 %{_share_dir}/*
+%{_libdir}/*
 %attr(0755,root,root) %{_prefix}/bin
