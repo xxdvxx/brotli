@@ -14,7 +14,7 @@ RUN yum install -y git gzip unzip wget rpmdevtools rpm-build kernel-headers\
   gcc libc-devel make cmake openssl-devel pcre-devel zlib-devel autoconf\
   && yum clean all
 
-RUN git clone https://github.com/google/brotli \
+RUN cd $BUILDPATH && git clone https://github.com/google/brotli \
   && cd brotli && mkdir out && cd out && ../configure-cmake \
   && make && make install && ls
 
