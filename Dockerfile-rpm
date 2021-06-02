@@ -14,12 +14,17 @@ RUN yum install -y git gzip unzip wget rpmdevtools rpm-build kernel-headers\
   gcc libc-devel make cmake openssl-devel pcre-devel zlib-devel autoconf\
   && yum clean all
 
-RUN ls -lha && pwd && cd brotli && git checkout $VERSION \
-  && mkdir out && cd out && ../configure-cmake \
-  && make
+RUN git clone https://github.com/google/brotli \
+  && cd brotli && mkdir out && cd out && ../configure-cmake \
+  && make && make install && ls
 
 WORKDIR $BUILDPATH/out/
-RUN ls -lha
+COPY libbrotlicommon.so.$VERSION .
+COPY libbrotlidec.so.$VERSION .
+COPY libbrotlienc.so.$VERSION .
+COPY brotli .
+COPY brotli.spec .
+COPY LICENSE .
 
 RUN tar -z -c --transform 's,^,/brotli/,' -f brotli-$VERSION.tar.gz brotli db/ proxyx-migrate
 
