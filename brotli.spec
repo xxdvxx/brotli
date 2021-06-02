@@ -35,12 +35,6 @@ install -p -D -m 755 db/migrations/* $RPM_BUILD_ROOT%{_share_dir}/brotli
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%pre
-/usr/bin/getent group brotli >/dev/null || /usr/sbin/groupadd -r brotli
-if ! /usr/bin/getent passwd brotli >/dev/null ; then
-    /usr/sbin/useradd -r -g brotli -M -d %{_prefix}/brotli -s /bin/bash -c "Proxyx" brotli
-fi
-
 %files
 %defattr(-,root,root)
 %{_share_dir}/*

@@ -8,7 +8,6 @@ ARG ART_PASS
 ARG ART_REPO
 
 ENV BUILDPATH='/brotli'
-ENV PATH=$PATH:/go/bin:/usr/local/go/bin
 
 RUN yum install -y git gzip unzip wget rpmdevtools rpm-build kernel-headers\
   curl libxslt-devel gd-devel GeoIP-devel openssh-clients libtool automake\
