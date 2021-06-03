@@ -19,10 +19,10 @@ RUN git clone https://github.com/google/brotli \
   && cd brotli && mkdir out && cd out && ../configure-cmake \
   && make && make install && ls
 RUN ls; ls brotli; ls brotli/out
-COPY brotli/out/libbrotlicommon.so.$VERSION .
-COPY brotli/out/libbrotlidec.so.$VERSION .
-COPY brotli/out/libbrotlienc.so.$VERSION .
-COPY brotli/out/brotli .
+COPY /usr/local/lib/libbrotlicommon.so.$VERSION .
+COPY /usr/local/lib/libbrotlidec.so.$VERSION .
+COPY /usr/local/lib/libbrotlienc.so.$VERSION .
+COPY /usr/local/bin/brotli .
 COPY brotli.spec .
 COPY LICENSE .
 
